@@ -54,6 +54,7 @@ public class SpecialSymbolToken extends Token {
             default: //the special symbol contains only this one character
                 assert(TokenType.getSpecialSymbols().containsKey(Character.toString(currentChar))); //when Scanner creates the object, it should have already checked that the char is/part of a special symbol
                 this.type = TokenType.getSpecialSymbols().get(Character.toString(currentChar));
+                currentChar = getNextChar();
         }
     }
 }
