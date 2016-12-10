@@ -23,6 +23,9 @@ public abstract class Token {
         this.lineNumber = source.getLineNumber();
         this.startingPosition = source.getCurrentPosition();
 
+        this.text = "";
+        this.value = "";
+
         extract();
     }
 
@@ -32,6 +35,22 @@ public abstract class Token {
 
     public char getNextChar() throws Exception {
         return source.getNextChar();
+    }
+
+    public int getLineNumber() throws Exception {
+        return this.lineNumber;
+    }
+
+    public int getStartingPosition() throws Exception {
+        return this.startingPosition;
+    }
+
+    public String getText() throws Exception {
+        return this.text;
+    }
+
+    public String getType() throws Exception {
+        return this.type.toString();
     }
 
     //uses the source to deduce the text and valud of the rest of the token
