@@ -17,7 +17,7 @@ public class Source {
     final int NO_LINES_READ_YET = -1;
 
     int lineNumber;
-    int position;
+    int currentPosition;
     String line;
 
     BufferedReader bufferedReader;
@@ -25,7 +25,7 @@ public class Source {
     public Source(String fileName) throws IOException {
             bufferedReader = new BufferedReader(new FileReader(fileName));
         lineNumber = NO_LINES_READ_YET;
-        position = 0;
+        currentPosition = 0;
     }
 
     //end of line, end of file, no lines read yet (when we first assign lineNumber in constructor, if we readLine, we can avoid this case), valid character
@@ -33,24 +33,35 @@ public class Source {
         if (line == null) {
             return EOF;
         }
-        else if (position == line.length()){
+        else if (currentPosition == line.length()){
             return EOL;
         }
         else if (lineNumber == NO_LINES_READ_YET) {
             readLine(); //lineNumber will become 1
             return getCurrentChar();
         }
-        else {
-            return line.charAt(position);
+        //suppose the current char is at EOL and the user calls getNextChar()
+        else if (currentPosition > line.length()) {
+            readLine();
+            return getCurrentChar();
         }
+        else {
+            return line.charAt(currentPosition);
+        }
+    }
+
+    //consumes the current char by moving the currentPosition forwards by 1. This can also go over the line's length, in which case, getCurrentChar() will automatically read next line
+    public char getNextChar() throws Exception{
+        currentPosition++;
+        return getCurrentChar();
     }
 
     public int getLineNumber() {
         return lineNumber;
     }
 
-    public int getPosition() {
-        return position;
+    public int getCurrentPosition() {
+        return currentPosition;
     }
 
 
