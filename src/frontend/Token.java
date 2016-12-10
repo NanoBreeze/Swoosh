@@ -6,22 +6,35 @@ import java.io.IOException;
  * Created by Lenny on 2016-12-08.
  * Very important. Fundamental building blocks. Created from lexemes
  */
-public class Token {
+public abstract class Token {
     protected int lineNumber;
-    protected String text;
+    protected int startingPosition;
     protected Source source;
 
-    public Token(Source source) throws IOException {
+    protected String text; //the literal text of the token, eg, '''hi'
+    protected Object value; //used by error and the actualy value of the token, eg,'hi'
+
+    protected TokenType type; //an enum eg, IDENTIFIER, ERROR, AND, BEGIN (instead of "RESERVED" type, we specify the reserved words)
+
+
+
+    public Token(Source source) throws Exception {
         this.source = source;
         this.lineNumber = source.getLineNumber();
+        this.startingPosition = source.getCurrentPosition();
 
         extract();
     }
 
-    //gets the token from the source. For now, each character is a token
-    protected void extract() throws IOException {
-        text = Character.toString(source.getCurrentChar());
-
+    public char getCurrentChar() throws Exception {
+        return source.getCurrentChar();
     }
+
+    public char getNextChar() throws Exception {
+        return source.getNextChar();
+    }
+
+    //uses the source to deduce the text and valud of the rest of the token
+    protected abstract void extract() throws Exception;
 
 }
