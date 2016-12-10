@@ -30,15 +30,15 @@ public class Source {
 
     //end of line, end of file, no lines read yet (when we first assign lineNumber in constructor, if we readLine, we can avoid this case), valid character
     public char getCurrentChar() throws IOException{
-        if (line == null) {
+        if (lineNumber == NO_LINES_READ_YET) {
+            readLine(); //lineNumber will become 1
+            return getCurrentChar();
+        }
+        else if (line == null) {
             return EOF;
         }
         else if (currentPosition == line.length()){
             return EOL;
-        }
-        else if (lineNumber == NO_LINES_READ_YET) {
-            readLine(); //lineNumber will become 1
-            return getCurrentChar();
         }
         //suppose the current char is at EOL and the user calls getNextChar()
         else if (currentPosition > line.length()) {
@@ -70,6 +70,7 @@ public class Source {
         line = bufferedReader.readLine();
 
         if (line != null) {
+            currentPosition = 0;
             lineNumber++;
         }
     }

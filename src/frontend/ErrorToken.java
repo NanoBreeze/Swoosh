@@ -15,7 +15,7 @@ public class ErrorToken extends Token {
         this.type = TokenType.ERROR;
     }
 
-    public void extract() throws IOException {
+    public void extract() throws Exception {
         //do nothing
     }
 }

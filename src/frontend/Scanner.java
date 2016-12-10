@@ -24,6 +24,14 @@ public class Scanner {
         return source.getNextChar();
     }
 
+    public Token getCurrentToken() throws Exception {
+        return token;
+    }
+
+    public Token getNextToken() throws Exception {
+        return extractToken();
+    }
+
     //finds the token and returns it
     public Token extractToken() throws Exception{
 
@@ -31,20 +39,24 @@ public class Scanner {
         char currentChar = getCurrentChar();
 
         if (Character.isLetter(currentChar)) {
-            return new WordToken(source);
+            token = new WordToken(source);
         }
-        else if (Character.isDigit(currentChar)) {
-            return new NumberToken(source);
+        else if (Character.isDigit(currentChar) || currentChar == '-') {
+            token = new NumberToken(source);
         }
-        else if (currentChar == '\'') {
-            return new StringToken(source);
+        else if (currentChar == '\"') {
+            token = new StringToken(source);
         }
         else if (TokenType.getSpecialSymbols().containsKey(Character.toString(currentChar))) {
-            return new SpecialSymbolToken(source);
+            token = new SpecialSymbolToken(source);
+        }
+        else if (currentChar == Source.EOF) {
+            token = new EOFToken(source);
         }
         else { //invalid character
-            return new ErrorToken(source, INVALID_CHARACTER, Character.toString(currentChar));
+            token = new ErrorToken(source, INVALID_CHARACTER, Character.toString(currentChar));
         }
+        return token;
     }
 
     private void skipWhiteSpaceAndComment() throws Exception {

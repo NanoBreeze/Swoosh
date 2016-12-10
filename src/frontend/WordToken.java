@@ -6,7 +6,7 @@ import java.io.IOException;
  * Created by Lenny on 2016-12-09.
  */
 public class WordToken extends Token {
-    public WordToken(Source source) throws IOException{
+    public WordToken(Source source) throws Exception{
         super(source);
     }
 
@@ -16,7 +16,7 @@ public class WordToken extends Token {
         char currentChar = getCurrentChar();
 
         do {
-            this.text = Character.toString(currentChar);
+            this.text += Character.toString(currentChar);
             currentChar = getNextChar();
         } while (Character.isLetterOrDigit(currentChar) || currentChar == '_');
 
@@ -25,7 +25,7 @@ public class WordToken extends Token {
         //find token type. For words, the type is either IDENTIFIER, or the specific reserved word
 
         if (TokenType.getReservedWords().contains(this.text.toLowerCase())) {
-            this.type = TokenType.valueOf(this.text.toLowerCase());
+            this.type = TokenType.valueOf(this.text.toUpperCase());
         }
         else {
             this.type = TokenType.IDENTIFIER;
