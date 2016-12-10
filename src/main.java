@@ -8,7 +8,7 @@ class Interpreter
 {
     public static void main(String args[]) {
         try {
-            Source source = new Source("test.txt");
+            Source source = new Source("NEWTON.PAS");
             Scanner scanner = new Scanner(source);
             Parser parser = new Parser(scanner);
             parser.parse();

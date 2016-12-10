@@ -49,8 +49,8 @@ public abstract class Token {
         return this.text;
     }
 
-    public String getType() throws Exception {
-        return this.type.toString();
+    public TokenType getType() throws Exception {
+        return this.type;
     }
 
     //uses the source to deduce the text and valud of the rest of the token
