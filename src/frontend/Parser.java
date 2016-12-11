@@ -11,8 +11,8 @@ import java.util.ArrayList;
  * "Parses" the tokens provided by scanner, checks if there are errors and builds stuff from the tokens
  */
 public class Parser {
-    Scanner scanner;
-    SymTab symTab;
+    protected Scanner scanner;
+    protected SymTab symTab;
 
     public Parser(Scanner scanner) {
         this.scanner = scanner;
@@ -51,6 +51,10 @@ public class Parser {
 
     public Token getNextToken() throws Exception {
         return scanner.getNextToken();
+    }
+
+    public Token getCurrentToken() throws Exception {
+        return scanner.getCurrentToken();
     }
 
 
