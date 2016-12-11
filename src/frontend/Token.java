@@ -1,5 +1,7 @@
 package frontend;
 
+import sun.reflect.annotation.EnumConstantNotPresentExceptionProxy;
+
 import java.io.IOException;
 
 /**
@@ -51,6 +53,10 @@ public abstract class Token {
 
     public TokenType getType() throws Exception {
         return this.type;
+    }
+
+    public Object getValue() throws Exception {
+        return this.value;
     }
 
     //uses the source to deduce the text and valud of the rest of the token
