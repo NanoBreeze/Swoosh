@@ -2,6 +2,7 @@ package frontend;
 
 import intermediate.Node;
 import intermediate.NodeKey;
+import sun.org.mozilla.javascript.internal.ast.IfStatement;
 
 /**
  * Created by Lenny on 2016-12-10.
@@ -15,17 +16,42 @@ public class StatementParser extends Parser{
     public Node parse(Token token) throws Exception {
         Node statementRoot = null;
 
-        if (token.getType() == TokenType.BEGIN) {
-            CompoundParser compoundParser = new CompoundParser(this.scanner);
-            statementRoot = compoundParser.parse(token);
-        }
-        else { //is an identifier, assumes only begin and identifiers in test sample
-            AssignmentParser assignmentParser = new AssignmentParser(this.scanner);
-            statementRoot = assignmentParser.parse(token);
-        }
+        switch((TokenType) token.getType()) {
 
-        setLineNumber(statementRoot, token);
-        return statementRoot;
+            case BEGIN: {
+                CompoundParser compoundParser = new CompoundParser(this.scanner);
+                statementRoot = compoundParser.parse(token);
+                break;
+            }
+            case IDENTIFIER: {
+            //is an identifier, assumes only begin and identifiers in test sample
+                AssignmentParser assignmentParser = new AssignmentParser(this.scanner);
+                statementRoot = assignmentParser.parse(token);
+                break;
+            }
+            case WHILE: {
+                WhileParser whileParser = new WhileParser(this.scanner);
+                statementRoot = whileParser.parse(tokn);
+                break;
+            }
+            case FOR: {
+                ForParser forParser = new ForParser(this.scanner);
+                statementRoot = forParser.parse(token);
+                break;
+            }
+            case IF: {
+                IfStatementParser ifParser = new IfStatementParser(this.scanner);
+                statementRoot = ifParser.parse(token);
+                break;
+            }
+            default: {
+                System.out.println("Invalid token in StatementParser");
+                break;
+            }
+
+            setLineNumber(statementRoot, token);
+            return statementRoot;
+        }
 
     }
 
