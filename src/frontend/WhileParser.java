@@ -30,7 +30,7 @@ public class WhileParser extends StatementParser{
         notNode.addChild(expressionParser.parse(token));
 
         //parse the statement
-        StatementParser statementParser = new StatementParser(this);
+        StatementParser statementParser = new StatementParser(this.scanner);
         loopNode.addChild(statementParser.parse(token));
 
         return loopNode;

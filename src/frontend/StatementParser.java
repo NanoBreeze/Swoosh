@@ -31,16 +31,11 @@ public class StatementParser extends Parser{
             }
             case WHILE: {
                 WhileParser whileParser = new WhileParser(this.scanner);
-                statementRoot = whileParser.parse(tokn);
-                break;
-            }
-            case FOR: {
-                ForParser forParser = new ForParser(this.scanner);
-                statementRoot = forParser.parse(token);
+                statementRoot = whileParser.parse(token);
                 break;
             }
             case IF: {
-                IfStatementParser ifParser = new IfStatementParser(this.scanner);
+                IfParser ifParser = new IfParser(this.scanner);
                 statementRoot = ifParser.parse(token);
                 break;
             }
@@ -48,11 +43,10 @@ public class StatementParser extends Parser{
                 System.out.println("Invalid token in StatementParser");
                 break;
             }
-
-            setLineNumber(statementRoot, token);
-            return statementRoot;
         }
 
+        setLineNumber(statementRoot, token);
+        return statementRoot;
     }
 
     protected void setLineNumber(Node node, Token token) throws Exception {
@@ -69,7 +63,6 @@ public class StatementParser extends Parser{
             if (token.getType() == TokenType.SEMICOLON) {
                 token = getNextToken();
             }
-
             else {
                 System.out.println("Unexpected end token");
             }
