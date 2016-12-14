@@ -13,8 +13,8 @@ import java.util.HashMap;
  */
 public class ExpressionParser extends StatementParser{
 
-    public ExpressionParser(Scanner scanner) {
-        super (scanner);
+    public ExpressionParser(Parser parent) {
+        super (parent);
     }
     public Node parse(Token token) throws Exception {
         return parseExpression(token);
@@ -98,12 +98,11 @@ public class ExpressionParser extends StatementParser{
         return root;
     }
 
-    private static final EnumSet<TokenType> MULT_OPS = EnumSet.of(TokenType.STAR, TokenType.SLASH, TokenType.DIV, TokenType.MOD, TokenType.AND);
+    private static final EnumSet<TokenType> MULT_OPS = EnumSet.of(TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.DIV, TokenType.MOD, TokenType.AND);
     private static final HashMap<TokenType, NodeType> MULT_OPS_OPS_MAP = new HashMap<TokenType, NodeType>();
     static {
-        MULT_OPS_OPS_MAP.put(TokenType.STAR, NodeType.MULTIPLY);
-        MULT_OPS_OPS_MAP.put(TokenType.SLASH, NodeType.FLOAT_DIVIDE);
-        MULT_OPS_OPS_MAP.put(TokenType.DIV, NodeType.INTEGER_DIVIDE);
+        MULT_OPS_OPS_MAP.put(TokenType.MULTIPLY, NodeType.MULTIPLY);
+        MULT_OPS_OPS_MAP.put(TokenType.DIVIDE, NodeType.DIVIDE);
         MULT_OPS_OPS_MAP.put(TokenType.MOD, NodeType.MOD);
         MULT_OPS_OPS_MAP.put(TokenType.AND, NodeType.AND);
     }
@@ -151,16 +150,8 @@ public class ExpressionParser extends StatementParser{
                 break;
             }
 
-            case INTEGER: {
-                root = new Node(NodeType.INTEGER_CONSTANT);
-                root.setAttribute(NodeKey.VALUE, token.getValue());
-
-                token = getNextToken();
-                break;
-            }
-
-            case REAL: {
-                root = new Node(NodeType.REAL_CONSTNAT);
+            case NUMBER: {
+                root = new Node(NodeType.NUMBER_CONSTANT);
                 root.setAttribute(NodeKey.VALUE, token.getValue());
 
                 token = getNextToken();

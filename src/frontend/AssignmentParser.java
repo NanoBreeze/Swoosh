@@ -10,37 +10,37 @@ import intermediate.SymTabEntry;
  */
 public class AssignmentParser extends StatementParser{
 
-    public AssignmentParser(Scanner scanner){
-        super(scanner);
+    public AssignmentParser(Parser parent){
+        super(parent);
     }
 
     public Node parse(Token token) throws Exception{
         Node assignNode = new Node(NodeType.ASSIGN);
 
-        String targetName = token.getText().toLowerCase();
-        SymTabEntry targetId = symTab.lookup(targetName);
+        String variableName = token.getText().toLowerCase();
+        SymTabEntry variableEntry = symTab.lookup(variableName );
 
-        if (targetId == null) {
-            targetId = symTab.enter(targetName);
+        if (variableEntry == null) {
+            variableEntry = symTab.enter(variableName);
         }
-        targetId.appendLineNumber(token.getLineNumber());
+        variableEntry.appendLineNumber(token.getLineNumber());
 
-        token = getNextToken(); //consume
+        token = getNextToken(); //consume variable
 
         Node variableNode = new Node(NodeType.VARIABLE);
-        variableNode.setAttribute(NodeKey.ID, targetId);
+        variableNode.setAttribute(NodeKey.ID, variableEntry);
 
         assignNode.addChild(variableNode);
 
         //look for the = token
-        if (token.getType() == TokenType.EQUALS) {
+        if (token.getType() == TokenType.ASSIGN) {
             token = getNextToken(); //consume the equal sign
         }
         else {
             System.out.println("Something went wrong here!");
         }
 
-        ExpressionParser expressionParser = new ExpressionParser(this.scanner);
+        ExpressionParser expressionParser = new ExpressionParser(this);
         assignNode.addChild(expressionParser.parse(token));
 
         return assignNode;

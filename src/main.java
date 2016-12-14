@@ -8,7 +8,7 @@ class Interpreter
 {
     public static void main(String args[]) {
         try {
-            Source source = new Source("NEWTON.PAS");
+            Source source = new Source("statement.pas");
             Scanner scanner = new Scanner(source);
             Parser parser = new Parser(scanner);
             parser.parse();
@@ -18,5 +18,27 @@ class Interpreter
 
         }
 
+        A a = new A();
+        B b = new B();
+        b.c = 4;
+        a.b = b;
+
+        Hi(a);
+
+
     }
+
+    public static void Hi(A a) {
+
+       B b = new B();
+        b.c=6;
+        a.b = b;
+    }
+}
+
+class B {
+    public int c;
+}
+class A {
+    public B b;
 }

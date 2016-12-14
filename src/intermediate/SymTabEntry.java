@@ -9,7 +9,7 @@ import java.util.HashMap;
 public class SymTabEntry extends HashMap<SymTabEntryKey, Object>{
 
     SymTab symTab; //the symbol table containing this entry
-    String name; //the name of this entry, basically the text of the token for now
+    String name; //the name of this entry, basically the lowercase text of the token
     ArrayList<Integer> lineNumbers;
 
     public SymTabEntry(String name, SymTab symTab) {

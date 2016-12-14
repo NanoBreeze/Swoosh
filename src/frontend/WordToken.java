@@ -27,12 +27,6 @@ public class WordToken extends Token {
         if (TokenType.getReservedWords().contains(this.text.toLowerCase())) {
             this.type = TokenType.valueOf(this.text.toUpperCase());
         }
-        else if (this.text.toLowerCase().equals("real")) {
-            this.type = TokenType.REAL;
-        }
-        else if (this.text.toLowerCase().equals("integer")) {
-            this.type = TokenType.INTEGER;
-        }
         else {
             this.type = TokenType.IDENTIFIER;
         }
