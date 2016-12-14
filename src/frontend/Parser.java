@@ -12,24 +12,25 @@ import java.util.ArrayList;
  */
 public class Parser {
     protected Scanner scanner;
-    protected SymTab symTab;
-    protected Token token;
+    protected static SymTab symTab;
 
+    static {
+        symTab = new SymTab(0);
+    }
     public Parser(Scanner scanner) {
         this.scanner = scanner;
-        this.symTab = new SymTab(0);
     }
 
     public void parse() throws Exception {
 
-        this.token = getNextToken();
+        Token token = getNextToken();
         Node mostRootNode = null;
 
         if (token.getType() == TokenType.BEGIN)
         {
             StatementParser statementParser = new StatementParser(this);
             mostRootNode = statementParser.parse(token);
-//            printAST(mostRootNode);
+            printAST(mostRootNode);
         }
         else {
             System.out.println("Statement must start with a begin, invalid here!");
@@ -52,26 +53,23 @@ public class Parser {
         if (rootType == NodeType.NUMBER_CONSTANT){
 
             String value = root.getAttribute(NodeKey.VALUE).toString();
-            System.out.println("<" + rootType.toString() + "value=" + value + "/>");
+            System.out.println("<" + rootType.toString() + " value=" + value + " />");
         }
         else if (rootType == NodeType.VARIABLE) {
             String name = ((SymTabEntry) root.getAttribute(NodeKey.ID)).getName();
-            System.out.println("<" + rootType.toString() + " id=" + name + "/>");
+            System.out.println("<" + rootType.toString() + " id=" + name + " />");
         }
         else {
             System.out.println("<" + rootType.toString() + ">");
         }
         root.getType().toString();
-        if (root.getChildren().size() > 0) {
-            printAST(root.getChildren().get(0));
-        }
-        if (root.getChildren().size() == 2)
-        {
-            printAST(root.getChildren().get(1));
+
+        for (Node node :root.getChildren()) {
+            printAST(node);
         }
 
         //close the type
-        if ((rootType != NodeType.VARIABLE) || (rootType != NodeType.NUMBER_CONSTANT)) {
+        if ((rootType != NodeType.VARIABLE) && (rootType != NodeType.NUMBER_CONSTANT)) {
             System.out.println("</" + rootType.toString() + ">");
         }
     }

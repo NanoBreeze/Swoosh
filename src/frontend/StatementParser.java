@@ -58,7 +58,10 @@ public class StatementParser extends Parser{
             Node statementNode = parse(token);
             parentNode.addChild(statementNode);
 
-            printAST(parentNode);
+//            printAST(parentNode);
+
+            token = getCurrentToken();
+
             //check for semicolon
             if (token.getType() == TokenType.SEMICOLON) {
                 token = getNextToken();
