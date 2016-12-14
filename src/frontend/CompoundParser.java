@@ -8,8 +8,8 @@ import intermediate.NodeType;
  */
 public class CompoundParser extends StatementParser{
 
-    public CompoundParser(Scanner scanner) {
-        super(scanner);
+    public CompoundParser(Parser parent) {
+        super(parent);
 
     }
 
@@ -19,7 +19,7 @@ public class CompoundParser extends StatementParser{
         //create compound node
         Node compoundNode = new Node(NodeType.COMPOUND);
 
-        StatementParser statementParser = new StatementParser(scanner);
+        StatementParser statementParser = new StatementParser(this);
         statementParser.parseList(token, compoundNode, TokenType.END, ErrorCode.UNEXPECTED_EOF);
 
         return compoundNode;
