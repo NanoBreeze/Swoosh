@@ -19,8 +19,7 @@ public class ExpressionExecutor extends StatementExecutor{
                 //the variable must already be in the symbol table
                 SymTabEntry entry = (SymTabEntry) node.getAttribute(NodeKey.ID);
                 return entry.getAttribute(SymTabEntryKey.DATA_VALUE);
-            case INTEGER_CONSTANT: return (Integer) node.getAttribute(NodeKey.VALUE);
-            case REAL_CONSTNAT: return (Float) node.getAttribute(NodeKey.VALUE);
+            case NUMBER_CONSTANT: return (Float) node.getAttribute(NodeKey.VALUE);
             case STRING_CONSTANT: return (String) node.getAttribute(NodeKey.VALUE);
             default:
                 return executeBinaryOperator(node, nodeType);
@@ -28,7 +27,7 @@ public class ExpressionExecutor extends StatementExecutor{
         }
     }
 
-    private static final EnumSet<NodeType> ARITH_OPS = EnumSet.of(NodeType.ADD, NodeType.SUBTRACT, NodeType.MULTIPLY, NodeType.FLOAT_DIVIDE, NodeType.INTEGER_DIVIDE);
+    private static final EnumSet<NodeType> ARITH_OPS = EnumSet.of(NodeType.ADD, NodeType.SUBTRACT, NodeType.MULTIPLY, NodeType.DIVIDE);
 
     private Object executeBinaryOperator(Node node, NodeType nodeType) throws Exception{
         //Get the two operand children
@@ -54,10 +53,8 @@ public class ExpressionExecutor extends StatementExecutor{
                         return value1 - value2;
                     case MULTIPLY:
                         return value1 * value2;
-                    case FLOAT_DIVIDE:
+                    case DIVIDE:
                         return ((float) value1 ) / ((float) value2);
-                    case INTEGER_DIVIDE:
-                        return value1/value2;
                     case MOD:
                         return value1 % value2;
                 }

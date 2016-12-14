@@ -14,15 +14,19 @@ public class SpecialSymbolToken extends Token {
         //some special symbols have two characters and some have one
         char currentChar = getCurrentChar();
 
+        this.text += Character.toString(currentChar);
         switch (currentChar) {
             case '<': //<, <=, <>
                 currentChar = getNextChar();
                 if (currentChar == '=') {
                     this.type = TokenType.LESS_EQUALS;
+                    this.text += Character.toString(currentChar);
+
                     currentChar = getNextChar();
                 }
                 else if (currentChar == '>') {
                     this.type = TokenType.NOT_EQUALS;
+                    this.text += Character.toString(currentChar);
                     currentChar = getNextChar();
                 }
                 else { this.type = TokenType.LESS_THAN; }
@@ -31,6 +35,7 @@ public class SpecialSymbolToken extends Token {
                 currentChar = getNextChar();
                 if (currentChar == '=') {
                     this.type = TokenType.GREATER_EQUALS;
+                    this.text += Character.toString(currentChar);
                     currentChar = getNextChar();
                 }
                 else { this.type = TokenType.GREATER_THAN; }
@@ -39,17 +44,10 @@ public class SpecialSymbolToken extends Token {
                 currentChar = getNextChar();
                 if (currentChar == '=') {
                     this.type = TokenType.EQUALS;
+                    this.text += Character.toString(currentChar);
                     currentChar = getNextChar();
                 }
                 else { this.type = TokenType.ASSIGN; }
-                break;
-            case '.': //., ..
-                currentChar = getNextChar();
-                if (currentChar == '.') {
-                    this.type = TokenType.DOT_DOT;
-                    currentChar = getNextChar();
-                }
-                else { this.type = TokenType.DOT; }
                 break;
             default: //the special symbol contains only this one character
                 assert(TokenType.getSpecialSymbols().containsKey(Character.toString(currentChar))); //when Scanner creates the object, it should have already checked that the char is/part of a special symbol

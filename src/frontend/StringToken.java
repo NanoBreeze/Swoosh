@@ -12,27 +12,15 @@ public class StringToken extends Token {
     }
 
     public void extract() throws Exception {
-        //escape characters include \", which represents a ".
+        //There are no escape characters
         //consume the first "
         char currentChar = getNextChar();
 
-        while (currentChar != '"' && currentChar != EOF) { //if a \" appears, in which it's not time to end, then we consume it
+        while (currentChar != '"' && currentChar != EOF) {
             if (Character.isWhitespace(currentChar)) {
                 this.text += " ";
                 this.value += " ";
                 currentChar = getNextChar();
-            }
-            else if (currentChar == '\\') {
-                currentChar = getNextChar();
-                if (currentChar == '"') {
-                    this.text += "\\\"";
-                    this.value += "\\\"";
-                    currentChar = getNextChar();
-                }
-                else {
-                    this.text += "\\";
-                    this.value += "\\";
-                }
             }
             else {
                 this.text += Character.toString(currentChar);

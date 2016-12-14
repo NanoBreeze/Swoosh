@@ -8,8 +8,8 @@ import intermediate.NodeType;
  * Created by Lenny on 2016-12-11.
  */
 public class WhileParser extends StatementParser{
-    public WhileParser(Scanner scanner) {
-        super(scanner);
+    public WhileParser(Parser parent) {
+        super(parent);
     }
 
     public Node parse(Token token) throws Exception {
@@ -26,11 +26,11 @@ public class WhileParser extends StatementParser{
         token = getNextToken();//consume the DO
 
         //parse the expression
-        ExpressionParser expressionParser = new ExpressionParser(this.scanner);
+        ExpressionParser expressionParser = new ExpressionParser(this);
         notNode.addChild(expressionParser.parse(token));
 
         //parse the statement
-        StatementParser statementParser = new StatementParser(this.scanner);
+        StatementParser statementParser = new StatementParser(this);
         loopNode.addChild(statementParser.parse(token));
 
         return loopNode;

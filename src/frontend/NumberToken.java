@@ -13,32 +13,38 @@ public class NumberToken extends Token {
     //Numbers are either real or integer. Allow positive/negative but no exponents
     public void extract() throws Exception {
         char currentChar = getCurrentChar();
-        boolean isPositive = true;
         String integerPart = "";
         String fractionalPart = "";
         String totalNumber = "";
+
+        //if there's a sign in front of the number
         if (currentChar == '-') {
             totalNumber += '-';
+            currentChar = getNextChar();
+        }
+        else if (currentChar == '+') {
+            totalNumber += '+';
             currentChar = getNextChar();
         }
 
         integerPart = getDigits();
         currentChar = getCurrentChar();
         if (currentChar == '.') {
-            this.type = TokenType.REAL;
             currentChar = getNextChar();
             fractionalPart = getDigits();
             totalNumber += integerPart + "." + fractionalPart;
-            this.value = Double.parseDouble(totalNumber);
         }
         else {
-            this.type = TokenType.INTEGER;
             totalNumber += integerPart;
             this.value = Integer.getInteger(totalNumber);
         }
-        //TODO: Check for overflow and underflow numbers
 
-        this.text += totalNumber;
+        if (this.type != TokenType.ERROR) {
+            this.value = Double.parseDouble(totalNumber);
+            this.text += totalNumber;
+            this.type = TokenType.NUMBER;
+        }
+        //TODO: Check for overflow and underflow numbers
     }
 
     private String getDigits() throws Exception {

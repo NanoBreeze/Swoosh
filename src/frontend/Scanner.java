@@ -41,10 +41,10 @@ public class Scanner {
         if (Character.isLetter(currentChar)) {
             token = new WordToken(source);
         }
-        else if (Character.isDigit(currentChar) || currentChar == '-') {
+        else if (Character.isDigit(currentChar)) {
             token = new NumberToken(source);
         }
-        else if (currentChar == '\"') {
+        else if (currentChar == '"') {
             token = new StringToken(source);
         }
         else if (TokenType.getSpecialSymbols().containsKey(Character.toString(currentChar))) {
