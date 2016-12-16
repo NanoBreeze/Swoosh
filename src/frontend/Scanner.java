@@ -69,6 +69,7 @@ public class Scanner {
                 while (currentChar != '}') {
                     currentChar = getNextChar();
                 }
+                currentChar = getNextChar(); //consume the }
             }
             else { //is a whitespace
                 currentChar = getNextChar();

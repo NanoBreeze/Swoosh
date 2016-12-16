@@ -124,7 +124,7 @@ public class ExpressionParser extends StatementParser{
 
             opNode.addChild(parseFactor(token));
 
-            token = getNextToken();
+            token = getCurrentToken();
             tokenType = token.getType();
         }
         return root;

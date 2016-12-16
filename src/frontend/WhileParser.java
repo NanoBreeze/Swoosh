@@ -23,11 +23,12 @@ public class WhileParser extends StatementParser{
         loopNode.addChild(breakNode);
         breakNode.addChild(notNode);
 
-        token = getNextToken();//consume the DO
-
         //parse the expression
         ExpressionParser expressionParser = new ExpressionParser(this);
         notNode.addChild(expressionParser.parse(token));
+
+        assert(getCurrentToken().getType() == TokenType.DO);
+        token = getNextToken();//consume the DO
 
         //parse the statement
         StatementParser statementParser = new StatementParser(this);
