@@ -1,9 +1,6 @@
 package frontend;
 
-import intermediate.Node;
-import intermediate.NodeKey;
-import intermediate.NodeType;
-import intermediate.SymTabEntry;
+import intermediate.*;
 
 /**
  * Created by Lenny on 2016-12-10.
@@ -22,6 +19,7 @@ public class AssignmentParser extends StatementParser{
 
         if (variableEntry == null) {
             variableEntry = symTab.enter(variableName);
+            variableEntry.setType(SymTabEntryType.ASSIGNMENT_VARIABLE);
         }
         variableEntry.appendLineNumber(token.getLineNumber());
 

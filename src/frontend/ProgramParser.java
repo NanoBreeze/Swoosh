@@ -1,9 +1,6 @@
 package frontend;
 
-import intermediate.Node;
-import intermediate.SymTab;
-import intermediate.SymTabEntry;
-import intermediate.SymTabEntryKey;
+import intermediate.*;
 
 import java.util.ArrayList;
 
@@ -24,6 +21,8 @@ public class ProgramParser extends Parser{
 
         routineId.setAttribute(SymTabEntryKey.ROUTINE_SYMTAB, symTabStack.push()); //the routine's identifier (aka, name) is an entry onto the program. The routine itself has its own symbol table,
         //which we push onto the stack so that we can easily add entries to it by calling symTabStack.enterLocal(...)
+
+
         token = getCurrentToken();
         assert (token.getType() == TokenType.LEFT_PARENTHESIS); //after function name should be the left parenthesis
 
@@ -57,6 +56,7 @@ public class ProgramParser extends Parser{
             routineId = symTabStack.lookupLocalEntry(routineName);
             if (routineId == null) {
                 routineId = symTabStack.enterLocal(routineName);
+                routineId.setType(SymTabEntryType.ROUTINE);
             }
             else {
                 System.out.println("The routine name is already declared as another entry in local symbol table");

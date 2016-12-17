@@ -2,6 +2,8 @@ package frontend;
 
 import intermediate.Node;
 import intermediate.NodeKey;
+import intermediate.SymTabEntry;
+import intermediate.SymTabEntryType;
 import sun.org.mozilla.javascript.internal.ast.IfStatement;
 
 /**
@@ -23,9 +25,28 @@ public class StatementParser extends Parser{
                 statementRoot = compoundParser.parse(token);
                 break;
             }
-            case IDENTIFIER: {
-                AssignmentParser assignmentParser = new AssignmentParser(this);
-                statementRoot = assignmentParser.parse(token);
+            case IDENTIFIER: { //could be a variable or calling a routine
+
+                String name = token.getText().toLowerCase();
+                SymTabEntry id = symTabStack.lookup(name);
+
+                Boolean isRoutine;
+                if (id != null) {
+                    isRoutine = (id.getType() == SymTabEntryType.ASSIGNMENT_VARIABLE) ? false : true;
+                }
+                else {
+                    isRoutine = false;
+                }
+
+                if (isRoutine) {
+                    CallParser callParser = new CallParser(this);
+                    statementRoot = callParser.parse(token);
+                }
+                else {
+                    AssignmentParser assignmentParser = new AssignmentParser(this);
+                    statementRoot = assignmentParser.parse(token);
+                }
+
                 break;
             }
             case WHILE: {

@@ -32,6 +32,11 @@ public class Parser {
             ProgramParser programParser = new ProgramParser(this);
             SymTabEntry programEntry = programParser.parse(token);
 
+            token=getCurrentToken();
+            token = getNextToken(); //consume the ;
+
+            StatementParser statementParser = new StatementParser(this);
+            mostRootNode = statementParser.parse(token);
             printRoutineAsSymTabEntry(programEntry);
         }
 

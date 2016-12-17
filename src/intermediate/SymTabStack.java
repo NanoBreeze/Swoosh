@@ -30,6 +30,18 @@ public class SymTabStack extends ArrayList<SymTab> {
 
     }
 
+    public SymTabEntry lookup(String name) {
+        SymTabEntry entry = null;
+
+        // Search the current and enclosing scopes.
+        for (int i = currentNestingLevel; (i >= 0) && (entry == null); --i)
+        {
+            entry = get(i).lookup(name);
+        }
+
+        return entry;
+    }
+
     public int getCurrentNestingLevel() {
         return currentNestingLevel;
     }

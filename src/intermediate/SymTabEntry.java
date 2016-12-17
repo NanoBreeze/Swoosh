@@ -9,8 +9,11 @@ import java.util.HashMap;
 public class SymTabEntry extends HashMap<SymTabEntryKey, Object>{
 
     SymTab symTab; //the symbol table containing this entry
+    SymTabEntryType type;
     String name; //the name of this entry, basically the lowercase text of the token
     ArrayList<Integer> lineNumbers;
+
+
 
     public SymTabEntry(String name, SymTab symTab) {
         this.name = name;
@@ -18,6 +21,13 @@ public class SymTabEntry extends HashMap<SymTabEntryKey, Object>{
         lineNumbers = new ArrayList<Integer>();
     }
 
+    public void setType(SymTabEntryType type) {
+        this.type = type;
+    }
+
+    public SymTabEntryType getType() {
+        return type;
+    }
     public void setAttribute(SymTabEntryKey key, Object value) {
         put(key, value);
     }
