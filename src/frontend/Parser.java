@@ -13,11 +13,12 @@ import java.util.ArrayList;
 public class Parser {
     protected Scanner scanner;
     protected static SymTab symTab;
-
+    protected static SymTabStack symTabStack;
     static {
         symTab = new SymTab(0);
+        symTabStack = new SymTabStack();
     }
-    public Parser(Scanner scanner) {
+    public Parser(Scanner scanner){
         this.scanner = scanner;
     }
 
@@ -25,6 +26,14 @@ public class Parser {
 
         Token token = getNextToken();
         Node mostRootNode = null;
+
+        if (token.getType() == TokenType.PROCEDURE) {
+            token = getNextToken(); //consume PROCEDURE keyword
+            ProgramParser programParser = new ProgramParser(this);
+            SymTabEntry programEntry = programParser.parse(token);
+
+            printRoutineAsSymTabEntry(programEntry);
+        }
 
         if (token.getType() == TokenType.BEGIN)
         {
@@ -72,6 +81,28 @@ public class Parser {
         if ((rootType != NodeType.VARIABLE) && (rootType != NodeType.NUMBER_CONSTANT)) {
             System.out.println("</" + rootType.toString() + ">");
         }
+    }
+
+    protected void printRoutineAsSymTabEntry(SymTabEntry symTabEntry) {
+        System.out.println("<SymTabEntry as function. name=" + symTabEntry.getName() + ">");
+        System.out.println("<ROUTINE_PARAMS (aka, parameters)>");
+
+        ArrayList<SymTabEntry> routineParams = (ArrayList<SymTabEntry>) symTabEntry.getAttribute(SymTabEntryKey.ROUTINE_PARMS);
+        for (SymTabEntry param: routineParams) {
+            System.out.println("<SymTabEntry as parameter. name=" + param.getName() + " />");
+        }
+        System.out.println("</ROUTINE_PARAMS>");
+
+        System.out.println("<ROUTINE_ICODE (aka, definition, statements>");
+        Node root = (Node) symTabEntry.getAttribute(SymTabEntryKey.ROUTINE_ICODE);
+        printAST(root);
+        System.out.println("</ROUTINE_ICODE>");
+
+        System.out.println("</SymTabEntry as function>");
+    }
+
+    private void printRoutineAsSymTabEntryInternal(SymTabEntry symTabEntry) {
+
     }
 
 }

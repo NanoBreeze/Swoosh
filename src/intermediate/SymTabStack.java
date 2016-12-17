@@ -30,5 +30,29 @@ public class SymTabStack extends ArrayList<SymTab> {
 
     }
 
+    public int getCurrentNestingLevel() {
+        return currentNestingLevel;
+    }
+
+    public SymTab push() {
+        currentNestingLevel++;
+        SymTab symTab = new SymTab(currentNestingLevel);
+        add(symTab);
+        return symTab;
+    }
+
+    public SymTab pop() {
+
+        SymTab symTab = get(currentNestingLevel);
+        remove(currentNestingLevel);
+        currentNestingLevel--;
+
+        return symTab;
+    }
+
+
+
+
+
 
 }
