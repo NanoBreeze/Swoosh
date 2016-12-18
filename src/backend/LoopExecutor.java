@@ -27,6 +27,9 @@ public class LoopExecutor extends StatementExecutor{
                         exprNode = child.getChildren().get(0);
                     }
                     exitLoop = (Boolean) expressionExecutor.execute(exprNode);
+                    if (exitLoop) {
+                        break;
+                    }
                 }
 
                 //statement node

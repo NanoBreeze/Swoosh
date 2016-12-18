@@ -27,7 +27,9 @@ public class WhileParser extends StatementParser{
         ExpressionParser expressionParser = new ExpressionParser(this);
         notNode.addChild(expressionParser.parse(token));
 
-        assert(getCurrentToken().getType() == TokenType.DO);
+        if (getCurrentToken().getType() != TokenType.DO) {
+            System.out.println("Missing DO keyword");
+        }
         token = getNextToken();//consume the DO
 
         //parse the statement

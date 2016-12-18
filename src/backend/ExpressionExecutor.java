@@ -31,6 +31,15 @@ public class ExpressionExecutor extends StatementExecutor{
                 Object value = execute(expressionNode);
                     return -((Double) value);
                 }
+            case NOT: {
+                // Get the NOT node's expression node child.
+                ArrayList<Node> children = node.getChildren();
+                Node expressionNode = children.get(0);
+
+                // Execute the expression and return the "not" of its value.
+                boolean value = (Boolean) execute(expressionNode);
+                return !value;
+            }
             default:
                 return executeBinaryOperator(node, nodeType);
 
@@ -62,7 +71,7 @@ public class ExpressionExecutor extends StatementExecutor{
                     case MULTIPLY:
                         return value1 * value2;
                     case DIVIDE:
-                        return (value1 ) / (value2);
+                        return value1 / value2;
                     case MOD:
                         return value1 % value2;
                 }

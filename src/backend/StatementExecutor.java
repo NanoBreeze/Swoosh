@@ -25,6 +25,16 @@ public class StatementExecutor extends Executor{
                 return assignmentExecutor.execute(node);
             }
 
+            case IF: {
+                IfExecutor ifExecutor = new IfExecutor();
+                return ifExecutor.execute(node);
+            }
+
+            case LOOP: {
+                LoopExecutor loopExecutor = new LoopExecutor();
+                return loopExecutor.execute(node);
+            }
+
             default: {
                 System.out.println("StatementExecutor, invalid node type");
                 return null;

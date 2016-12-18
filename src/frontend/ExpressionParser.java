@@ -54,12 +54,13 @@ public class ExpressionParser extends StatementParser{
         return root;
     }
 
-    private static final EnumSet<TokenType> ADD_OPS = EnumSet.of(TokenType.PLUS, TokenType.MINUS);
+    private static final EnumSet<TokenType> ADD_OPS = EnumSet.of(TokenType.PLUS, TokenType.MINUS, TokenType.OR);
 
     private static final HashMap<TokenType, NodeType> ADD_OPS_OPS_MAP = new HashMap<TokenType, NodeType>();
     static {
         ADD_OPS_OPS_MAP.put(TokenType.PLUS, NodeType.ADD);
         ADD_OPS_OPS_MAP.put(TokenType.MINUS, NodeType.SUBTRACT);
+        ADD_OPS_OPS_MAP.put(TokenType.OR, NodeType.OR);
     }
 
     private Node parseSimpleExpression(Token token) throws Exception {

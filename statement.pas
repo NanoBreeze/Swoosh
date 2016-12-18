@@ -1,6 +1,26 @@
 BEGIN
     BEGIN {Temperature conversions.}
         a = 3;
+        b = 3;
+
+
+
+    WHILE (a < 4) OR (b == 1) DO
+    BEGIN
+    IF a < 4
+    THEN
+    b = 88;
+    a = a+1;
+    END
+
+          IF a < 45
+            THEN
+            b = 34;
+            ELSE
+            BEGIN
+            a = 88;
+            b = 43;
+            END
         five  = -1 + 2 - 3 + 4 + 3;
         ratio = five/9.0;
 
@@ -22,17 +42,5 @@ BEGIN
         root = (number/root + root)/2;
     END;
 
-    IF a > 45
-    THEN
-    b = 34;
-    ELSE
-    b = 43;
 
-    i = 0;
-    j = 0;
-    WHILE i > j DO
-    BEGIN
-    i = i+1;
-    j = j+i;
-    END
 END.
