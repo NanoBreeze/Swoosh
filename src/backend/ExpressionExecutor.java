@@ -1,5 +1,6 @@
 package backend;
 
+import com.sun.org.apache.xerces.internal.impl.dv.xs.DoubleDV;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import frontend.Parser;
 import intermediate.*;
@@ -19,8 +20,17 @@ public class ExpressionExecutor extends StatementExecutor{
                 //the variable must already be in the symbol table
                 SymTabEntry entry = (SymTabEntry) node.getAttribute(NodeKey.ID);
                 return entry.getAttribute(SymTabEntryKey.DATA_VALUE);
-            case NUMBER_CONSTANT: return (Float) node.getAttribute(NodeKey.VALUE);
+            case NUMBER_CONSTANT: return (Double) node.getAttribute(NodeKey.VALUE);
             case STRING_CONSTANT: return (String) node.getAttribute(NodeKey.VALUE);
+            case NEGATE: {
+                // Get the NEGATE node's expression node child.
+                ArrayList<Node> children = node.getChildren();
+                Node expressionNode = children.get(0);
+
+                // Execute the expression and return the negative of its value.
+                Object value = execute(expressionNode);
+                    return -((Double) value);
+                }
             default:
                 return executeBinaryOperator(node, nodeType);
 
@@ -38,12 +48,10 @@ public class ExpressionExecutor extends StatementExecutor{
         Object operand1 = execute(operandNode1);
         Object operand2 = execute(operandNode2);
 
-        boolean integerMode = (operand1 instanceof Integer) && (operand2 instanceof Integer);
-
         //arithmetic operations
         if (ARITH_OPS.contains(nodeType)) {
-                int value1 = (Integer) operand1;
-                int value2 = (Integer) operand2;
+                double value1 = (Double) operand1;
+                double value2 = (Double) operand2;
 
                 //switch oeprations
                 switch (nodeType) {
@@ -54,7 +62,7 @@ public class ExpressionExecutor extends StatementExecutor{
                     case MULTIPLY:
                         return value1 * value2;
                     case DIVIDE:
-                        return ((float) value1 ) / ((float) value2);
+                        return (value1 ) / (value2);
                     case MOD:
                         return value1 % value2;
                 }
@@ -70,8 +78,8 @@ public class ExpressionExecutor extends StatementExecutor{
         }
         else //relational operators
         {
-            float value1 = (Float) operand1;
-            float value2 = (Float) operand2;
+            double value1 = (Double) operand1;
+            double value2 = (Double) operand2;
 
             switch (nodeType) {
                 case EQ: return value1 == value2;

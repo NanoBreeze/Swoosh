@@ -1,10 +1,26 @@
 package backend;
 
+import intermediate.Node;
+import intermediate.SymTabStack;
+
 /**
  * Created by Lenny on 2016-12-11.
  */
 public class Executor {
-    public void execute() throws Exception {
 
+    protected static SymTabStack symTabStack;
+    protected static Node root;
+
+    public void execute(Node node, SymTabStack symTabStack) throws Exception{
+        this.root = node;
+        this.symTabStack = symTabStack;
+
+        StatementExecutor statementExecutor = new StatementExecutor();
+        statementExecutor.execute(root);
+
+    }
+
+    public SymTabStack getSymTabStack() {
+        return symTabStack;
     }
 }

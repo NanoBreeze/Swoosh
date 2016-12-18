@@ -1,7 +1,5 @@
-123 345
-Hello there
 Begin
-"hi"
-"hello\""
-34.7
-=>=     =
+a = 45;
+b = 3;
+c = a + b;
+End

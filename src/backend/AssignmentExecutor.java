@@ -23,6 +23,13 @@ public class AssignmentExecutor extends StatementExecutor{
         //set the value in the symbol table
         SymTabEntry variableId = (SymTabEntry) variableNode.getAttribute(NodeKey.ID);
         variableId.setAttribute(SymTabEntryKey.DATA_VALUE, value);
+
+        printAssignment(variableId);
+
         return null;
+    }
+
+    private void printAssignment(SymTabEntry variableId) {
+        System.out.println(variableId.getName() + ": " + variableId.getAttribute(SymTabEntryKey.DATA_VALUE));
     }
 }

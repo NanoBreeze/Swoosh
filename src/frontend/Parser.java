@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 public class Parser {
     protected Scanner scanner;
-    protected static SymTab symTab;
     protected static SymTabStack symTabStack;
+    protected static Node root;
     static {
-        symTab = new SymTab(0);
         symTabStack = new SymTabStack();
+        root = null;
     }
     public Parser(Scanner scanner){
         this.scanner = scanner;
@@ -25,7 +25,6 @@ public class Parser {
     public void parse() throws Exception {
 
         Token token = getNextToken();
-        Node mostRootNode = null;
 
         if (token.getType() == TokenType.PROCEDURE) {
             token = getNextToken(); //consume PROCEDURE keyword
@@ -36,15 +35,15 @@ public class Parser {
             token = getNextToken(); //consume the ;
 
             StatementParser statementParser = new StatementParser(this);
-            mostRootNode = statementParser.parse(token);
+            root = statementParser.parse(token);
             printRoutineAsSymTabEntry(programEntry);
         }
 
         if (token.getType() == TokenType.BEGIN)
         {
             StatementParser statementParser = new StatementParser(this);
-            mostRootNode = statementParser.parse(token);
-            printAST(mostRootNode);
+            root = statementParser.parse(token);
+            printAST(root);
         }
         else {
             System.out.println("Statement must start with a begin, invalid here!");
@@ -57,6 +56,14 @@ public class Parser {
 
     public Token getCurrentToken() throws Exception {
         return scanner.getCurrentToken();
+    }
+
+    public SymTabStack getSymTabStack() {
+        return symTabStack;
+    }
+
+    public Node getRoot() {
+        return root;
     }
 
     protected void printAST(Node root) {
@@ -109,5 +116,6 @@ public class Parser {
     private void printRoutineAsSymTabEntryInternal(SymTabEntry symTabEntry) {
 
     }
+
 
 }

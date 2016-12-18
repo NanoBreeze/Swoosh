@@ -15,10 +15,10 @@ public class AssignmentParser extends StatementParser{
         Node assignNode = new Node(NodeType.ASSIGN);
 
         String variableName = token.getText().toLowerCase();
-        SymTabEntry variableEntry = symTab.lookup(variableName );
+        SymTabEntry variableEntry = symTabStack.lookup(variableName );
 
         if (variableEntry == null) {
-            variableEntry = symTab.enter(variableName);
+            variableEntry = symTabStack.enterLocal(variableName);
             variableEntry.setType(SymTabEntryType.ASSIGNMENT_VARIABLE);
         }
         variableEntry.appendLineNumber(token.getLineNumber());

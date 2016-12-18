@@ -120,10 +120,10 @@ public class ExpressionParser extends StatementParser{
             opNode.addChild(root);
 
             token = getNextToken();
-            tokenType = token.getType();
 
             opNode.addChild(parseFactor(token));
 
+            root = opNode;
             token = getCurrentToken();
             tokenType = token.getType();
         }
@@ -138,7 +138,7 @@ public class ExpressionParser extends StatementParser{
             case IDENTIFIER: {
                 //if identifier doesn't exist in stack, it is undefined
                 String name = token.getText().toLowerCase();
-                SymTabEntry id = symTab.lookup(name);
+                SymTabEntry id = symTabStack.lookup(name);
                 if (id == null) {
                     System.out.println("The token:" + name + " is not defined");
                 }
