@@ -24,7 +24,9 @@ public class ProgramParser extends Parser{
 
 
         token = getCurrentToken();
-        assert (token.getType() == TokenType.LEFT_PARENTHESIS); //after function name should be the left parenthesis
+        if (token.getType() != TokenType.LEFT_PARENTHESIS) { //after function name should be the left parenthesis
+            System.out.println("Missing left parenthesis to call");
+        }
 
         parseParameters(token, routineId);
 
@@ -81,6 +83,7 @@ public class ProgramParser extends Parser{
             while (tokenType == TokenType.IDENTIFIER) { //this while loop is wierd.
                 String name = token.getText().toLowerCase();
                 SymTabEntry symTabEntry = symTabStack.enterLocal(name);
+                symTabEntry.setType(SymTabEntryType.ASSIGNMENT_VARIABLE);
                 parms.add(symTabEntry);
                 token = getNextToken();
 

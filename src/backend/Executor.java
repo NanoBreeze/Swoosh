@@ -10,7 +10,11 @@ public class Executor {
 
     protected static SymTabStack symTabStack;
     protected static Node root;
+    protected static RuntimeStack runtimeStack;
 
+    static {
+        runtimeStack = new RuntimeStack();
+    }
     public void execute(Node node, SymTabStack symTabStack) throws Exception{
         this.root = node;
         this.symTabStack = symTabStack;

@@ -26,27 +26,30 @@ public class Parser {
 
         Token token = getNextToken();
 
-        if (token.getType() == TokenType.PROCEDURE) {
+        while (token.getType() == TokenType.PROCEDURE) {
             token = getNextToken(); //consume PROCEDURE keyword
             ProgramParser programParser = new ProgramParser(this);
             SymTabEntry programEntry = programParser.parse(token);
 
             token=getCurrentToken();
-            token = getNextToken(); //consume the ;
 
-            StatementParser statementParser = new StatementParser(this);
-            root = statementParser.parse(token);
-            printRoutineAsSymTabEntry(programEntry);
+
+            if (token.getType() != TokenType.SEMICOLON) {
+                System.out.println("Parser, missing ; after procedure definition");
+            }
+
+            token = getNextToken();
+//            printRoutineAsSymTabEntry(programEntry);
         }
 
-        if (token.getType() == TokenType.BEGIN)
-        {
+        if (token.getType() == TokenType.START) {
+            token = getNextToken();
             StatementParser statementParser = new StatementParser(this);
             root = statementParser.parse(token);
             printAST(root);
         }
         else {
-            System.out.println("Statement must start with a begin, invalid here!");
+            System.out.println("Parser. Statement must start with a START token!");
         }
     }
 

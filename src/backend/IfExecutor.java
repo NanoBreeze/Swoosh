@@ -21,11 +21,10 @@ public class IfExecutor extends StatementExecutor{
         if (conditionIsTrue) {
            statementExecutor.execute(thenNode);
         }
-        else {
+        else if (elseNode != null) {
             statementExecutor.execute(elseNode);
         }
 
         return null;
-
     }
 }

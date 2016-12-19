@@ -35,6 +35,11 @@ public class StatementExecutor extends Executor{
                 return loopExecutor.execute(node);
             }
 
+            case CALL: {
+                CallExecutor callExecutor = new CallExecutor();
+                return callExecutor.execute(node);
+            }
+
             default: {
                 System.out.println("StatementExecutor, invalid node type");
                 return null;

@@ -1,6 +1,26 @@
-PROCEDURE name(a, b, one);
+PROCEDURE fibonacci(a, b);
 BEGIN
-x = 34;
+sum = a + b;
+IF sum < 1000
+THEN
+fibonacci(b, sum);
 END;
 
-name(1, 1-45, 97);
+PROCEDURE factorial(a, b);
+BEGIN
+product = a*b;
+if ( b > 1)
+THEN
+factorial(product, b-1);
+END;
+
+PROCEDURE hello();
+BEGIN
+a = 4;
+END;
+
+START
+BEGIN
+fibonacci(1, 1);
+factorial(5, 4);
+END

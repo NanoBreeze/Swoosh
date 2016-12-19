@@ -87,8 +87,9 @@ public class StatementParser extends Parser{
             if (token.getType() == TokenType.SEMICOLON) {
                 token = getNextToken();
             }
+            else if (token.getType() == terminator) { } //do nothing
             else {
-                System.out.println("Unexpected end token");
+                System.out.println("StatementParer. Missing semicolon here");
             }
         }
 

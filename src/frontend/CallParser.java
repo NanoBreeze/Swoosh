@@ -35,6 +35,12 @@ public class CallParser extends StatementParser{
             }
         }
 
+        if (token.getType() != TokenType.RIGHT_PARENTHESIS) {
+            System.out.println("Missing right parenthesis for calling function");
+        }
+
+        token = getNextToken();
+
         callNode.setAttribute(NodeKey.ID, routineEntry);
         callNode.addChild(parametersNode);
 

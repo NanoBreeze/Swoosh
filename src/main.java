@@ -12,7 +12,7 @@ class Interpreter
 {
     public static void main(String args[]) {
         try {
-            Source source = new Source("statement.pas");
+            Source source = new Source("routine.pas");
             Scanner scanner = new Scanner(source);
             Parser parser = new Parser(scanner);
             parser.parse();
