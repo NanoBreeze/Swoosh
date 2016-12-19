@@ -21,6 +21,10 @@ END;
 
 START
 BEGIN
-fibonacci(1, 1);
-factorial(5, 4);
+a = 45;
+a = "oijoij";
+b = "hey";
+b = 12;
+ { fibonacci(1, 1); }
+ { factorial(5, 4); }
 END

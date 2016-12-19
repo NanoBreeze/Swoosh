@@ -159,6 +159,16 @@ public class ExpressionParser extends StatementParser{
                 break;
             }
 
+            case STRING: {
+                String value = (String) token.getValue();
+
+                root = new Node(NodeType.STRING_CONSTANT);
+                root.setAttribute(NodeKey.VALUE, token.getValue());
+
+                token = getNextToken(); //consume the string
+                break;
+            }
+
             case LEFT_PARENTHESIS: {
                 token = getNextToken(); //consume the (
                 root = parseExpression(token);
